@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name = 'socket.io'
   s.version = SocketIo::VERSION
   s.platform = Gem::Platform::RUBY
-  s.date = '2011-11-21'
+  s.date = "2011-11-22"
   s.authors = ['Derek Kastner']
   s.email = 'dkastner@gmail.com'
   s.homepage = 'http://github.com/dkastner/socket.io-ruby'
