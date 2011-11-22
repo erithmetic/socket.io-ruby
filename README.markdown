@@ -45,7 +45,15 @@ By default, Cramp uses HttpRouter in config/routes.rb to manage connections. Soc
 
 Optionally, SocketIo.routes can take a path. The default is `/socket.io`.
 
-Throw that in with some [Thin](http://code.macournoyer.com/thin/) or [Rainbows](http://rainbows.rubyforge.org), and you've got yourself a websocket server! Here's the client-side code to make it all happen:
+Throw that in with some [Thin](http://code.macournoyer.com/thin/) or [Rainbows](http://rainbows.rubyforge.org), and you've got yourself a websocket server!
+
+Note that you'll need to configure cramp's websocket adapter to use thin or rainbows:
+
+    # config.ru
+    
+    Cramp::Websocket.backend = :rainbows  # or :thin
+
+Here's the client-side code to make it all happen:
 
     <script type="text/javascript" src="socket.io-client.js"></script>
     <script type="text/javascript">
