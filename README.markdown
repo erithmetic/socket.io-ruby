@@ -1,6 +1,6 @@
 # socket.io-ruby
 
-Socket.io server plugin for Cramp.
+[Socket.io] for the Ruby Kids. A plugin for [Cramp](http://cramp.in/). Socket.io is a library that makes writing cross-borwser websockets super easy and resilient.
 
 ## Usage
 
@@ -11,9 +11,9 @@ Cramp is similar in spirit to Rails but specializes in evented web apps. Simply
 Define a new Cramp::Action and include SocketIo::Websocket. Then define which 
 method should handle certain events and messages.
 
-    # app/actions/socket_action.rb
+    # app/actions/akbar_action.rb
     
-    class SocketAction < Cramp::Websocket
+    class AkbarAction < Cramp::Websocket
       include SocketIo::Websocket
 
       on :message, :read_message
@@ -27,9 +27,36 @@ method should handle certain events and messages.
       
       def report_trap(imperial_fleet)
         puts "It's a trap!"
-        puts "Concentrate all firepower on #{imperial_fleet[:super_stardestroyer]}"
+        puts "Concentrate all firepower on #{imperial_fleet['super_stardestroyer']}"
+        return { 'move' => 'sector 227' }
       end
     end
+
+By default, Cramp uses HttpRouter in config/routes.rb to manage connections. SocketIo has a handy helper for that:
+
+    # config/routes.rb
+    
+    require 'socket.io'
+    require 'http_router'
+    
+    HttpRouter.new do
+      SocketIo.routes self, AkbarAction
+    end
+
+Optionally, SocketIo.routes can take a path. The default is `/socket.io`.
+
+Throw that in with some [Thin](http://code.macournoyer.com/thin/) or [Rainbows](http://rainbows.rubyforge.org), and you've got yourself a websocket server! Here's the client-side code to make it all happen:
+
+    <script type="text/javascript" src="socket.io-client.js"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://localhost/socket.io');
+      socket.on('connect', function () {
+        socket.send('the Emperor is building a new Death Star');
+        socket.emit('trap', { 'super_stardestroyer': 'Executor' }, function(instructions) {
+          alert('moving to ' + instructions['move']);
+        });
+      });
+    </script>
 
 ## Note on Patches/Pull Requests
  
