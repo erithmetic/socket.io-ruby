@@ -1,5 +1,7 @@
 # socket.io-ruby
 
+*NOTICE* This project is no longer maintained. I will accept tested pull requests, but that's it!
+
 [Socket.io] for the Ruby Kids. A plugin for [Cramp](http://cramp.in/). Socket.io is a library that makes writing cross-borwser websockets super easy and resilient.
 
 ## Usage
